@@ -5,21 +5,23 @@ const UserButton = () => {
 
     const [open, setOpen] = useState(false);
 
-    // TEMP USER
+    // TEMP USER, authenticate
     const currentUSer = true
 
     return currentUSer ? (
         <div className='userButton'>
-            <img src="" alt="" />
+            <img src="/utility/noAvatar.png" alt="" />
             <img onClick={() => setOpen((prev) => !prev)}
-            src="" 
+            src="/utility/arrow.svg" 
             alt="" 
             className='arrow'/>
-            <div className='userOptions'>
-                <div className='userOption'>Profile</div>
-                <div className='userOption'>Setting</div>
-                <div className='userOption'>Logout</div>
-            </div>
+            {open && (
+                <div className='userOptions'>
+                    <div className='userOption'>Profile</div>
+                    <div className='userOption'>Setting</div>
+                    <div className='userOption'>Logout</div>
+                </div>
+            )}
         </div>
     ) : (
         <a href='/' className='loginLink'>

@@ -8,7 +8,6 @@ const App = () => {
   return (
     <div className='app'>
       <LeftBar/>
-      // build a container to hold top bar and gallery
       <div className='content'>
         <TopBar/>
         <PhotoGallery/>
