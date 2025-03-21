@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-import './leftBarr.css'
-
-const LeftBar = () => {
-    return (
-        <div className='leftBar'>LeftBar</div>
-=======
 import Image from '../image/image'
 import { Link } from 'react-router'
 import './leftBar.css'
@@ -33,7 +26,6 @@ const LeftBar = () => {
                 <Image path="/utility/settings.svg" alt = ""/>
             </Link>
         </div>
->>>>>>> testing
     )
 }
 
