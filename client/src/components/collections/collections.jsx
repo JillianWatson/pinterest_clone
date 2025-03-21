@@ -1,5 +1,5 @@
 import './collections.css'
-import Image from '../../components/image/image.jsx'
+import Image from '../image/image.jsx'
 
 const Collections = () => {
     return(
