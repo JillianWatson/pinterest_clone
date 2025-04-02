@@ -18,6 +18,12 @@ router.post('/create', async (req, res)=>{
     res.json('User Created')
 })
 
+router.get('/fetch', async (req, res)=> {
+    const users = await User.find()
+
+    res.json(users)
+})
+
 router.get('/test', test)
 
 export default router
