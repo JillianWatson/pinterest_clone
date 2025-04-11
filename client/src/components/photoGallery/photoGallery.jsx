@@ -6,12 +6,14 @@ import axios from 'axios'
 
 
 //connect to backend server (:3000)
-const fetchPins = async ({pageParam}) => {
+const fetchPins = async ({pageParam, search}) => {
     //debugging connection
     console.log('API URL:', import.meta.env.VITE_API_ENDPOINT + '/pins');
 
     try {
-        const res = await axios.get(`http://localhost:3000/pins?cursor=${pageParam}`);
+        const res = await axios.get(`http://localhost:3000/pins?cursor=
+            ${pageParam}
+            &search=${search || "" }`);
         console.log('API Response:', res);
         return res.data;
       } catch (error) {
@@ -20,11 +22,11 @@ const fetchPins = async ({pageParam}) => {
       }
 }
 
-const PhotoGallery = () => {
+const PhotoGallery = (search) => {
 
     const {data, fetchNextPage, hasNextPage, status} = useInfiniteQuery({
-        queryKey: ["pins"],
-        queryFn: fetchPins,
+        queryKey: ["pins", "search"],
+        queryFn: ({pageParam= 0})=>fetchPins({pageParam, search}),
         initialPageParam: 0,
         getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
      });
