@@ -1,23 +1,45 @@
 import './postPage.css'
 import Image from '../../components/image/image'
 import PostInteractions from '../../components/postInteractions/postInteractions'
-import {Link} from 'react-router'
+import { Link, useParams } from 'react-router'
 import Comments from '../../components/comments/comments'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 
 const PostPage = () => {
+
+    const { id } = useParams();
+
+    const { isPending, error, data} = useQuery({
+        queryKey: ["pin", id],
+        queryFn: () => axios.get(`http://localhost:3000/pins/${id}`).then((res) => res.data),
+    });
+
+    if (isPending) return "Loading...";
+    if (error) return "An error has occured: " + error.message;
+    if (!data) return "Pin not found!";
+
     return(
         <div className='postPage'>
+            <svg
+             height="20"
+             viewBox='0 0 24 24'
+             width="20"
+             style={{ cursor: "pointer" }} 
+            >
+                <path d="M8.41 4.59a2 2 0 1 1 2.83 2.82L8.66 10H21a2 2 0 0 1 0 4H8.66l2.58 2.59a2 2 0 1 1-2.82 2.82L1 12z"></path>
+            </svg>
             <div className='postContainer'>
                 <div className='postImg'>
-                    <Image path='/populate/pin3.jpeg' alt='' w={736}/>
+                    <Image src={data.media} alt='' w={736}/>
                 </div>
                 <div className='postDetails'>
-                    <PostInteractions/>
-                    <Link to='/user' className='postUser'>
-                        <Image path='/utility/noAvatar.png'/>
-                        <span>John Doe</span>
+                    <PostInteractions postId={id}/>
+                    <Link to={`/${data.user.username}`} className='postUser'>
+                        <Image path={data.user.img || '/utility/noAvatar.png'}/>
+                        <span>{data.user.displayName}</span>
                     </Link>
-                    <Comments/>
+                    <Comments id={data._id}/>
                 </div>
             </div>
         </div>
